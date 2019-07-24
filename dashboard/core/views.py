@@ -4,6 +4,7 @@ from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Employee
 
 
 class Index(LoginRequiredMixin, View):
@@ -11,7 +12,8 @@ class Index(LoginRequiredMixin, View):
     login_url = '/login/'
     
     def get(self, request):
-        return render(request, self.template)
+        employees = Employee.objects.all()
+        return render(request, self.template, {'employees': employees})
 
 
 class Login(View):
